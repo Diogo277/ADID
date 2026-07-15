@@ -10,39 +10,6 @@ if (window.__ADID_INJECTED) {
   let lastMouse = { x: -9999, y: -9999 };
   const PROXIMITY_THRESHOLD = 80; // pixels
 
-  async function sendMessageToBackground(msg, timeoutMs = 60000) {
-    return new Promise((resolve) => {
-      let finished = false;
-      const timer = setTimeout(() => {
-        if (finished) return;
-        finished = true;
-        console.warn('ADID content_script: sendMessageToBackground timeout');
-        resolve({ ok: false, error: 'timeout' });
-      }, timeoutMs);
-
-      try {
-        chrome.runtime.sendMessage(msg, (resp) => {
-          if (finished) return;
-          finished = true;
-          clearTimeout(timer);
-          const err = chrome.runtime.lastError;
-          if (err) {
-            console.warn('ADID content_script: sendMessageToBackground error', err.message || String(err));
-            resolve({ ok: false, error: err.message || String(err) });
-            return;
-          }
-          resolve(resp || { ok: false, error: 'sem resposta' });
-        });
-      } catch (err) {
-        if (!finished) {
-          finished = true;
-          clearTimeout(timer);
-          resolve({ ok: false, error: err && err.message ? err.message : String(err) });
-        }
-      }
-    });
-  }
-
 function getBackground(el) {
   let bg = window.getComputedStyle(el).backgroundColor;
   while (bg === "rgba(0, 0, 0, 0)" && el.parentElement) {
@@ -349,7 +316,7 @@ async function adaptarPagina(mode) {
   const elementos = [];
   const dados = [];
 
-  // Filtra apenas elementos com cores vermelho ou verde — evita timeout no servidor
+  // Filtra apenas elementos com cores problemáticas para o modo ativo
   todosElementos.forEach(el => {
     try {
       // Ignora elementos sem área visível
@@ -389,28 +356,11 @@ async function adaptarPagina(mode) {
     return { ok: true };
   }
 
-  try {
-    const msg = { action: 'do_fetch_adapt', elementos: dados, mode: activeMode };
-    const resp = await sendMessageToBackground(msg);
-    if (!resp || resp.ok === false) {
-      // Servidor indisponível (Failed to fetch, timeout, etc.): aplica adaptação local
-      console.warn('ADID: servidor indisponível (' + (resp && resp.error) + '), usando fallback local');
-      handleAdaptResponse({ ok: true, resultado: { cores: [] } });
-      return { ok: true };
-    }
-    handleAdaptResponse(resp);
-    return { ok: true };
-  } catch (err) {
-    console.error('Erro ao adaptar (envio ao background):', err);
-    handleAdaptResponse({ ok: true, resultado: { cores: [] } });
-    return { ok: true };
-  }
+  handleAdaptResponse({ ok: true, resultado: { cores: [] } });
+  return { ok: true };
 
   function handleAdaptResponse(resp) {
-    const resultado = resp && resp.resultado ? resp.resultado : {};
-    const coresArr = resultado.cores || [];
-    // Marca elementos com base nas cores ORIGINAIS capturadas antes do envio
-    let marked = 0;
+    // Marca elementos com base nas cores originais capturadas no cliente
     dados.forEach((d, i) => {
       try {
         const el = elementos[i];
