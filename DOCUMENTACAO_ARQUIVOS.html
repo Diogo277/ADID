@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADID - Documentacao de Arquivos</title>
+  <style>
+    :root {
+      --ink: #18202a;
+      --muted: #5a6b7f;
+      --line: #d6dee8;
+      --bg: #f7f9fc;
+      --panel: #ffffff;
+      --accent: #0f5ea8;
+      --accent-2: #1a8f5f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.45;
+      padding: 26px;
+    }
+    .doc {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 24px 28px;
+    }
+    h1, h2, h3 { margin: 0 0 10px; }
+    h1 { font-size: 28px; color: var(--accent); }
+    h2 { font-size: 20px; color: var(--accent-2); margin-top: 24px; }
+    h3 { font-size: 16px; margin-top: 18px; }
+    p { margin: 0 0 10px; }
+    .meta { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+    .note {
+      border-left: 4px solid var(--accent);
+      background: #eef5ff;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin: 12px 0 18px;
+      font-size: 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: #edf5f2;
+      color: #1a3a2d;
+    }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      background: #f0f4f9;
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    ul { margin: 8px 0 0 18px; }
+    .footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+    }
+    @media print {
+      body { padding: 0; background: white; }
+      .doc { border: none; border-radius: 0; padding: 0; max-width: none; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="doc">
+    <h1>ADID - Documentacao de Arquivos do Projeto</h1>
+    <p class="meta">Data: 2026-07-22</p>
+
+    <p>Este documento descreve todos os arquivos encontrados no projeto ADID (excluindo pastas de ambiente virtual e metadados internos de controle de versao) e o objetivo de cada item.</p>
+
+    <div class="note">
+      <strong>Escopo adotado:</strong> arquivos de codigo, dados, documentacao, assets e configuracoes do projeto. A pasta <code>venv/</code> nao foi detalhada arquivo a arquivo por conter dependencias de terceiros geradas automaticamente.
+    </div>
+
+    <h2>1. Raiz do Projeto</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Arquivo</th>
+          <th>Tipo</th>
+          <th>Objetivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>.gitattributes</code></td>
+          <td>Configuracao Git</td>
+          <td>Define regras de normalizacao de fim de linha e opcoes de diff/merge para o repositorio.</td>
+        </tr>
+        <tr>
+          <td><code>.gitignore</code></td>
+          <td>Configuracao Git</td>
+          <td>Evita versionar arquivos temporarios, cache, segredos e ambientes virtuais (como <code>venv/</code>).</td>
+        </tr>
+        <tr>
+          <td><code>README.md</code></td>
+          <td>Documentacao principal</td>
+          <td>Apresenta o projeto ADID, estrutura, fluxo de uso da extensao, modos de daltonismo e limites conhecidos.</td>
+        </tr>
+        <tr>
+          <td><code>GUIA_RAPIDO.md</code></td>
+          <td>Guia operacional</td>
+          <td>Manual curto de instalacao e teste da extensao no Chrome, com passos de adaptacao e reset.</td>
+        </tr>
+        <tr>
+          <td><code>VISAO_GERAL.md</code></td>
+          <td>Documentacao tecnica</td>
+          <td>Resume arquitetura (popup, content script e manifesto), fluxo funcional e tecnologias usadas.</td>
+        </tr>
+        <tr>
+          <td><code>iniciar.bat</code></td>
+          <td>Script Windows</td>
+          <td>Exibe no terminal os passos para iniciar o uso da extensao localmente (sem servidor).</td>
+        </tr>
+        <tr>
+          <td><code>content_script.js</code></td>
+          <td>JavaScript (raiz)</td>
+          <td>Arquivo presente na raiz, atualmente vazio; nao participa da execucao da extensao carregada em <code>chrome_extension/</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>2. Pasta chrome_extension/</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Arquivo</th>
+          <th>Tipo</th>
+          <th>Objetivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>chrome_extension/manifest.json</code></td>
+          <td>Manifesto Chrome (MV3)</td>
+          <td>Define metadados da extensao, permissoes (<code>activeTab</code>, <code>scripting</code>), popup e injeccao de content script em <code>&lt;all_urls&gt;</code>.</td>
+        </tr>
+        <tr>
+          <td><code>chrome_extension/popup.html</code></td>
+          <td>Interface HTML</td>
+          <td>Estrutura visual do popup da extensao com abas de modo, botoes de adaptar/reset e legenda.</td>
+        </tr>
+        <tr>
+          <td><code>chrome_extension/popup.js</code></td>
+          <td>Logica do popup</td>
+          <td>Controla selecao de modo, renderiza descricao/legenda e envia comandos (<code>adapt</code> e <code>reset</code>) para a aba ativa.</td>
+        </tr>
+        <tr>
+          <td><code>chrome_extension/content_script.js</code></td>
+          <td>Logica de pagina</td>
+          <td>Analisa cores na pagina, marca elementos com risco de confusao (R/G ou B/Y), injeta badges/legenda e permite restaurar estilos.</td>
+        </tr>
+        <tr>
+          <td><code>chrome_extension/images/logotipo.png</code></td>
+          <td>Asset de imagem</td>
+          <td>Icone/raster da extensao usado no popup e no manifesto.</td>
+        </tr>
+        <tr>
+          <td><code>chrome_extension/images/logotipo.svg</code></td>
+          <td>Asset vetorial</td>
+          <td>Versao vetorial do logotipo para uso em materiais com escalabilidade sem perda de qualidade.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Pasta data/</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Arquivo</th>
+          <th>Tipo</th>
+          <th>Objetivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>data/dados.csv</code></td>
+          <td>CSV base</td>
+          <td>Conjunto enxuto de pares de cor (texto/fundo) com rotulo de boa acessibilidade (0/1) para referencia de teste.</td>
+        </tr>
+        <tr>
+          <td><code>data/dados_gerados.csv</code></td>
+          <td>CSV expandido</td>
+          <td>Base gerada com metricas adicionais (contraste, luminancia, distancias de cor e simulacao de deuteranopia) para analise.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4. Pasta images/</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Arquivo</th>
+          <th>Tipo</th>
+          <th>Objetivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>images/logotipo.png</code></td>
+          <td>Asset de imagem</td>
+          <td>Copia do logotipo em PNG para uso institucional/documental fora da pasta da extensao.</td>
+        </tr>
+        <tr>
+          <td><code>images/logotipo.svg</code></td>
+          <td>Asset vetorial</td>
+          <td>Copia vetorial do logotipo para materiais de apresentacao e diagramas.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>5. Pasta diagramas/</h2>
+    <p>A pasta <code>diagramas/</code> existe para armazenar diagramas e material visual da arquitetura, mas no estado atual encontra-se sem arquivos.</p>
+
+    <h2>6. Pasta venv/ (resumo)</h2>
+    <p>A pasta <code>venv/</code> contem o ambiente virtual Python local (interpretador, scripts executaveis e bibliotecas de terceiros). Seu objetivo e reproduzir dependencias de desenvolvimento localmente sem impactar o sistema operacional.</p>
+
+    <ul>
+      <li>Nao deve ser versionada (ja coberta pelo <code>.gitignore</code>).</li>
+      <li>Pode ser recriada quando necessario com ferramentas de ambiente virtual.</li>
+    </ul>
+
+    <p class="footer">Documento gerado automaticamente para fins de documentacao do TCC MBA.</p>
+  </main>
+</body>
+</html>

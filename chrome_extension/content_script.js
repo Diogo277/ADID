@@ -305,11 +305,19 @@ function bestContrastAgainst(bgHex) {
 }
 
 async function adaptarPagina(mode) {
+  const requestedMode = mode || 'deuteranopia';
+  const normalizedMode = MODE_CONFIG[requestedMode] ? requestedMode : 'deuteranopia';
+
   if (adaptacaoAtiva) {
-    mostrarMensagem('Adaptação já ativa', 'sucesso');
-    return { ok: true };
+    if (activeMode === normalizedMode) {
+      mostrarMensagem('Adaptação já ativa', 'sucesso');
+      return { ok: true };
+    }
+
+    // Troca de modo: limpa marcacoes atuais e reaplica no novo modo.
+    resetarCores(true);
   }
-  activeMode = mode || 'deuteranopia';
+  activeMode = normalizedMode;
   const modeCfg = MODE_CONFIG[activeMode] || MODE_CONFIG.deuteranopia;
 
   const todosElementos = Array.from(document.querySelectorAll('body *'));
@@ -334,14 +342,14 @@ async function adaptarPagina(mode) {
       );
       const colorHex = hasDirectText ? parseRgbString(estilo.color) : null;
 
+      const bgIsProblematic = backgroundHex && (modeCfg.A.fn(backgroundHex) || modeCfg.B.fn(backgroundHex));
+      const colorIsProblematic = colorHex && (modeCfg.A.fn(colorHex) || modeCfg.B.fn(colorHex));
+      if (!bgIsProblematic && !colorIsProblematic) return;
+
       if (!coresOriginais.has(el)) {
         const originalStyle = el.getAttribute && el.getAttribute('style');
         coresOriginais.set(el, { originalStyle, color: estilo.color, background: ownBg });
       }
-
-      const bgIsProblematic = backgroundHex && (modeCfg.A.fn(backgroundHex) || modeCfg.B.fn(backgroundHex));
-      const colorIsProblematic = colorHex && (modeCfg.A.fn(colorHex) || modeCfg.B.fn(colorHex));
-      if (!bgIsProblematic && !colorIsProblematic) return;
 
       if (!el.dataset.adidId) el.dataset.adidId = 'adid-' + (++window.__ADID_COUNTER);
       elementos.push(el);
@@ -361,6 +369,7 @@ async function adaptarPagina(mode) {
 
   function handleAdaptResponse(resp) {
     // Marca elementos com base nas cores originais capturadas no cliente
+    let marked = 0;
     dados.forEach((d, i) => {
       try {
         const el = elementos[i];
@@ -375,7 +384,7 @@ async function adaptarPagina(mode) {
   }
 }
 
-function resetarCores() {
+function resetarCores(silent = false) {
   coresOriginais.forEach((cores, el) => {
     try {
       if (cores && cores.originalStyle != null) el.setAttribute('style', cores.originalStyle);
@@ -391,7 +400,7 @@ function resetarCores() {
   clearBadges();
   adaptacaoAtiva = false;
   removeStylesAndLegend();
-  mostrarMensagem('Cores resetadas', 'sucesso');
+  if (!silent) mostrarMensagem('Cores resetadas', 'sucesso');
   return { ok: true };
 }
 
