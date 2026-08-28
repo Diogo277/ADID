@@ -1,4 +1,4 @@
-﻿# ADID - Acessibilidade de Cores (Extensao Chrome)
+﻿# ADID - Acessibilidade de Cores (Extensao Web)
 
 Projeto educacional para sinalizar combinacoes de cor problemáticas em paginas web para usuarios com daltonismo.
 
