@@ -2,11 +2,11 @@
 
 Projeto educacional para sinalizar combinacoes de cor problemáticas em paginas web para usuarios com daltonismo.
 
-Estado atual: execucao 100% local na extensao Chrome (sem servidor Flask no fluxo ativo deste repositorio).
+Estado atual: execucao 100% local na extensao web
 
 ## Estrutura
 
-- browser_extension/: extensao Chrome (popup, content script, manifesto e icones)
+- browser_extension/: extensao web (popup, content script, manifesto e icones)
 - data/: arquivos CSV usados no estudo
 - diagramas/: diagramas e material visual
 - README.md, GUIA_RAPIDO.md, VISAO_GERAL.md: documentacao
