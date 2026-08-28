@@ -6,7 +6,7 @@ Estado atual: execucao 100% local na extensao Chrome (sem servidor Flask no flux
 
 ## Estrutura
 
-- chrome_extension/: extensao Chrome (popup, content script, manifesto e icones)
+- browser_extension/: extensao Chrome (popup, content script, manifesto e icones)
 - data/: arquivos CSV usados no estudo
 - diagramas/: diagramas e material visual
 - README.md, GUIA_RAPIDO.md, VISAO_GERAL.md: documentacao
@@ -16,7 +16,7 @@ Estado atual: execucao 100% local na extensao Chrome (sem servidor Flask no flux
 1. Abra chrome://extensions/
 2. Ative "Modo do desenvolvedor"
 3. Clique em "Carregar sem compactacao"
-4. Selecione a pasta chrome_extension
+4. Selecione a pasta browser_extension
 5. Abra qualquer pagina web e use o icone da extensao
 
 ## Fluxo da extensao

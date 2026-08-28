@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -137,12 +138,12 @@
         <tr>
           <td><code>content_script.js</code></td>
           <td>JavaScript (raiz)</td>
-          <td>Arquivo presente na raiz, atualmente vazio; nao participa da execucao da extensao carregada em <code>chrome_extension/</code>.</td>
+          <td>Arquivo presente na raiz, atualmente vazio; nao participa da execucao da extensao carregada em <code>browser_extension/</code>.</td>
         </tr>
       </tbody>
     </table>
 
-    <h2>2. Pasta chrome_extension/</h2>
+    <h2>2. Pasta browser_extension/</h2>
     <table>
       <thead>
         <tr>
@@ -153,32 +154,32 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>chrome_extension/manifest.json</code></td>
+          <td><code>browser_extension/manifest.json</code></td>
           <td>Manifesto Chrome (MV3)</td>
           <td>Define metadados da extensao, permissoes (<code>activeTab</code>, <code>scripting</code>), popup e injeccao de content script em <code>&lt;all_urls&gt;</code>.</td>
         </tr>
         <tr>
-          <td><code>chrome_extension/popup.html</code></td>
+          <td><code>browser_extension/popup.html</code></td>
           <td>Interface HTML</td>
           <td>Estrutura visual do popup da extensao com abas de modo, botoes de adaptar/reset e legenda.</td>
         </tr>
         <tr>
-          <td><code>chrome_extension/popup.js</code></td>
+          <td><code>browser_extension/popup.js</code></td>
           <td>Logica do popup</td>
           <td>Controla selecao de modo, renderiza descricao/legenda e envia comandos (<code>adapt</code> e <code>reset</code>) para a aba ativa.</td>
         </tr>
         <tr>
-          <td><code>chrome_extension/content_script.js</code></td>
+          <td><code>browser_extension/content_script.js</code></td>
           <td>Logica de pagina</td>
           <td>Analisa cores na pagina, marca elementos com risco de confusao (R/G ou B/Y), injeta badges/legenda e permite restaurar estilos.</td>
         </tr>
         <tr>
-          <td><code>chrome_extension/images/logotipo.png</code></td>
+          <td><code>browser_extension/images/logotipo.png</code></td>
           <td>Asset de imagem</td>
           <td>Icone/raster da extensao usado no popup e no manifesto.</td>
         </tr>
         <tr>
-          <td><code>chrome_extension/images/logotipo.svg</code></td>
+          <td><code>browser_extension/images/logotipo.svg</code></td>
           <td>Asset vetorial</td>
           <td>Versao vetorial do logotipo para uso em materiais com escalabilidade sem perda de qualidade.</td>
         </tr>

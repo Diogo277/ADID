@@ -5,7 +5,7 @@
 1. Abra chrome://extensions/
 2. Ative "Modo do desenvolvedor"
 3. Clique em "Carregar sem compactacao"
-4. Selecione a pasta chrome_extension
+4. Selecione a pasta browser_extension
 
 ## Passo 2 - Testar
 

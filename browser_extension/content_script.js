@@ -1,11 +1,11 @@
 if (window.__ADID_INJECTED) {
-  console.log('ADID already injected (chrome_extension)');
+  console.log('ADID already injected (browser_extension)');
 } else {
   window.__ADID_INJECTED = true;
   const coresOriginais = new Map();
   const adidBadges = [];
   if (!window.__ADID_COUNTER) window.__ADID_COUNTER = 0;
-  console.log('ADID content_script (chrome_extension) loaded');
+  console.log('ADID content_script (browser_extension) loaded');
   let adaptacaoAtiva = false;
   let lastMouse = { x: -9999, y: -9999 };
   const PROXIMITY_THRESHOLD = 80; // pixels
@@ -405,7 +405,7 @@ function resetarCores(silent = false) {
 }
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  console.log('ADID received message in content_script (chrome_extension):', msg);
+  console.log('ADID received message in content_script (browser_extension):', msg);
   if (msg && msg.action === 'adapt') {
     adaptarPagina(msg.mode || 'deuteranopia').then(r => sendResponse(r));
     return true;

@@ -2,12 +2,6 @@
 
 ## 1. Arquitetura
 
-Imagem pronta:
-
-![Arquitetura ADID](arquitetura_adid.png)
-
-Versao vetorial (SVG): arquitetura_adid.svg
-
 ```mermaid
 flowchart LR
     U[Usuario no Chrome] --> P[Popup da extensao\npopup.html + popup.js]
@@ -29,12 +23,6 @@ flowchart LR
 ```
 
 ## 2. Funcionamento (adaptacao e reset)
-
-Imagem pronta:
-
-![Funcionamento ADID](funcionamento_adid.png)
-
-Versao vetorial (SVG): funcionamento_adid.svg
 
 ```mermaid
 flowchart TD
